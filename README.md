@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-size: large;">
     <div style="border-radius: 8px; background-image: linear-gradient(45deg, rgb(0, 96, 185),rgb(0, 255, 255), rgb(238, 238, 238)); max-width: 900px; padding: 2cm; color: black;">
-        <p>As of 2020/1/4:</p>
+        <p>As of 2020/1/23:</p>
         <div style="border-radius: 8px; padding: 1cm; background-color:rgba(0, 0, 0, 0.05);">
             <h1>Info</h1>
             <p>A Miku bot made for fans 🎤 by a fan!</p>
