@@ -105,6 +105,13 @@ class Music(commands.Cog):
                     del queue[0]
                 await ctx.send('Now playing: {}'.format(player.title))
             elif voicechannel.voice_client.is_playing() and queue == []:
+                wait = 0
+                while not voicechannel.voice_client.is_playing():
+                    await asyncio.sleep(1)
+                    wait += 1
+                    if wait == 5:
+                        break
+                await ctx.send('Lost Connection')
                 await ctx.invoke(self.bot.get_command('stop'))
             await asyncio.sleep(5)
 
