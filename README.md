@@ -7,6 +7,8 @@
             <p>A Miku bot made for fans 🎤 by a fan!</p>
             <p>Fun gimmicks, music, memes and a cross server chat for all your Miku fun.</p>
             <p>Join our support server at <a href="https://top.gg/servers/794027141678366770">Miku's Bot Anime and Memes!</a></p>
+            <p>If you plan on running this bot on your own, you will need the discord bot token, reddit api id and secret</p>
+            <p>Use this command to install the required libraries: pip install praw ytdl youtube_search youtube pytube<p>
         </div>
         <br>
         <div style="border-radius: 8px; padding: 1cm; background-color:rgba(0, 0, 0, 0.05);">
