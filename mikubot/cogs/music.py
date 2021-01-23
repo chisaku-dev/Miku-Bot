@@ -112,11 +112,12 @@ class Music(commands.Cog):
                         wait += 1
                         if wait == 5:
                             break
-                    await ctx.send('Connection Ended')
                     await ctx.invoke(self.bot.get_command('stop'))
+                    return
                 await asyncio.sleep(5)
             except:
-                await ctx.send('Connection Ended')
+                await ctx.invoke(self.bot.get_command('stop'))
+                return
 
     @commands.command(
         name="queue",
