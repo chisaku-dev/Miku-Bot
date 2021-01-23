@@ -98,22 +98,25 @@ class Music(commands.Cog):
                 await ctx.send(f'{url} was added to queue')
         
         while True:
-            if not voicechannel.voice_client.is_playing() and not queue == []:
-                async with ctx.typing():
-                    player = await YTDLSource.from_url(queue[0], loop=self.bot.loop, stream=True)
-                    voicechannel.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-                    del queue[0]
-                await ctx.send('Now playing: {}'.format(player.title))
-            elif not voicechannel.voice_client.is_playing() and queue == []:
-                wait = 0
-                while not voicechannel.voice_client.is_playing():
-                    await asyncio.sleep(1)
-                    wait += 1
-                    if wait == 5:
-                        break
-                await ctx.send('Lost Connection')
-                await ctx.invoke(self.bot.get_command('stop'))
-            await asyncio.sleep(5)
+            try:
+                if not voicechannel.voice_client.is_playing() and not queue == []:
+                    async with ctx.typing():
+                        player = await YTDLSource.from_url(queue[0], loop=self.bot.loop, stream=True)
+                        voicechannel.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+                        del queue[0]
+                    await ctx.send('Now playing: {}'.format(player.title))
+                elif not voicechannel.voice_client.is_playing() and queue == []:
+                    wait = 0
+                    while not voicechannel.voice_client.is_playing():
+                        await asyncio.sleep(1)
+                        wait += 1
+                        if wait == 5:
+                            break
+                    await ctx.send('Connection Ended')
+                    await ctx.invoke(self.bot.get_command('stop'))
+                await asyncio.sleep(5)
+            except:
+                ctx.send('Connection Ended')
 
     @commands.command(
         name="queue",
