@@ -27,11 +27,11 @@
                 <p>embed - embeds messsage given by user</p>
                 <p>ping - ping 🏓 me to get the latency!</p>
                 <p>help - The help 🆘 command!</p>
-                <p>chess - ♟ Play chess with Miku</p>
             </div>
             <br>
             <div>
                 <h2>Fun 🎲</h2>
+                <p>chess - ♟ Play chess with Miku</p>
                 <p>roshambo - play roshambo 👊✋✌ with Miku [rock/paper/scissor]</p>
                 <p>ship - Miku measures the love ♥ compatibility between two individuals</p>
                 <p>kill - Hitgirl gonna kill 🔫 some folks</p>
