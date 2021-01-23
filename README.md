@@ -24,6 +24,7 @@
                 <p>embed - embeds messsage given by user</p>
                 <p>ping - ping 🏓 me to get the latency!</p>
                 <p>help - The help 🆘 command!</p>
+                <p>chess - ♟ Play chess with Miku</p>
             </div>
             <br>
             <div>
@@ -58,12 +59,12 @@
         <br>
         <div style="border-radius: 8px; padding: 1cm; background-color:rgba(0, 0, 0, 0.05);">    
             <h1>Channel based features:</h1>
-            <p>#Global - A cross server 🌐 chat command | Does not support image sending but does for images sent as a link | Message and Image links must be sent separately for the preview to show | Your Discord username and server of orgin is exposed with message when it's uploaded to the network so please be courteous</p>
+            <p>#Global - A cross server 🌐 chat command | Supports Image sending | Your Discord username and server of orgin is exposed with message when it's uploaded to the network so please be courteous</p>
         </div>
         <br>
         <div style="border-radius: 8px; padding: 1cm; background-color:rgba(0, 0, 0, 0.05); font-size: small">
             <h1>Credits:</h1>
-            <p>This bot was made with care and with the use of discord.py, praw, ffmpeg, ytdl and youtube_search</p>
+            <p>This bot was made with care and with the use of discord.py, praw, ffmpeg, ytdl, sunfish and youtube_search</p>
             <p>This is an unofficial bot belonging to Mori#9453 and is not affiliated with Cryption Future Media in any way.</p>
         </div>
    </div>
