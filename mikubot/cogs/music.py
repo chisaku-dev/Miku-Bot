@@ -98,12 +98,14 @@ class Music(commands.Cog):
                 await ctx.send(f'{url} was added to queue')
         
         while True:
-            if not voicechannel.voice_client.is_playing():
+            if not voicechannel.voice_client.is_playing() and not queue.empty():
                 async with ctx.typing():
                     player = await YTDLSource.from_url(queue[0], loop=self.bot.loop, stream=True)
                     voicechannel.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
                     del queue[0]
                 await ctx.send('Now playing: {}'.format(player.title))
+            else:
+                await ctx.invoke(self.bot.get_command('stop'))
             await asyncio.sleep(5)
 
     @commands.command(
