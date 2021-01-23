@@ -104,7 +104,7 @@ class Music(commands.Cog):
                     voicechannel.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
                     del queue[0]
                 await ctx.send('Now playing: {}'.format(player.title))
-            else:
+            elif voicechannel.voicechannel.voice_client.is_playing() and queue == []:
                 await ctx.invoke(self.bot.get_command('stop'))
             await asyncio.sleep(5)
 
