@@ -466,7 +466,7 @@ class Fun(commands.Cog):
         pass_context=True
         )
     async def chess(self, ctx):
-        await ctx.send('use a-h horizontal and 1-8 vertical to move your pieces (ex: h2h4 | moves pawn on h2 to h4)')
+        await ctx.send('use a-h horizontal and 1-8 vertical to move your pieces (ex: h2h4 | moves pawn on h2 to h4)\n Type "stop" to forfeit the match at any time')
         await main(self, ctx)
         return
 
