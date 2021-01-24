@@ -30,7 +30,7 @@ class reddit(commands.Cog):
         help="Miku finds fanarts of waifus!"
     )
     async def waifuart(self, ctx):
-        searchtopics = ['loli art', 'waifu art', 'anime girl art', 'pixiv girl art', 'pixiv art', 'project sekai', 'appreciart', 'zero two art', 'mikasa ackerman art', 'kyoani girl', 'genshin art', 'cat girl', 'dog girl', 'hololive art']
+        searchtopics = ['loli art', 'waifu art', 'anime girl art', 'pixiv girl art', 'pixiv art', 'project sekai', 'appreciart', 'zero two art', 'mikasa ackerman art', 'kyoani girl', 'genshin art', 'anime cat girl', 'anime dog girl', 'hololive art']
         
         searchterm = searchtopics[random.randint(0, len(searchtopics)-1)]
         await ctx.invoke(self.bot.get_command('reddit'), search = searchterm)
@@ -50,7 +50,7 @@ class reddit(commands.Cog):
         help="Miku finds a meme"
     )
     async def meme(self, ctx):
-        searchtopics = ['memes', 'dankmemes', 'animememes', 'christianmemes', 'tech memes', 'funny memes']
+        searchtopics = ['memes', 'dankmemes', 'animememes', 'christianmemes', 'tech memes', 'funny memes', 'coding memes']
 
         searchterm = searchtopics[random.randint(0, len(searchtopics)-1)]
         await ctx.invoke(self.bot.get_command('reddit'), search = searchterm)
