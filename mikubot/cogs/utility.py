@@ -98,11 +98,16 @@ class Utility(commands.Cog):
         pass_context=True
     )
     
+    @commands.has_permissions(manage_messages=True)
     async def clear(self, ctx, amount: int):
         await ctx.channel.purge(limit=amount + 1)
         deletemessage = await ctx.send(f"{amount} messages got massacred by the leek.")
         await asyncio.sleep(3)
         await deletemessage.delete()
+    
+    @clear.error
+    async def clear_error(self, error, ctx):
+        await ctx.send(error)
 
 def setup(bot):
     bot.add_cog(Utility(bot))
