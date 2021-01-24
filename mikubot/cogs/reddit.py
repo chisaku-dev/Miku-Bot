@@ -23,7 +23,6 @@ class reddit(commands.Cog):
         searchtopics = ['hatsune miku art', 'hatsune art', 'miku hatsune art', 'r/hatsune']
 
         searchterm = searchtopics[random.randint(0, len(searchtopics)-1)]
-        print(searchterm, '|', end=' ')
         await ctx.invoke(self.bot.get_command('reddit'), search = searchterm)
 
     @commands.command(
@@ -34,7 +33,6 @@ class reddit(commands.Cog):
         searchtopics = ['loli art', 'waifu art', 'anime girl art', 'pixiv girl art', 'pixiv art', 'project sekai', 'appreciart', 'zero two art', 'mikasa ackerman art', 'kyoani girl', 'genshin art']
         
         searchterm = searchtopics[random.randint(0, len(searchtopics)-1)]
-        print(searchterm, '|', end=' ')
         await ctx.invoke(self.bot.get_command('reddit'), search = searchterm)
     
     
@@ -53,7 +51,6 @@ class reddit(commands.Cog):
         searchtopics = ['memes', 'dankmemes', 'animememes', 'christianmemes', 'tech memes', 'funny memes']
 
         searchterm = searchtopics[random.randint(0, len(searchtopics)-1)]
-        print(searchterm, '|', end=' ')
         await ctx.invoke(self.bot.get_command('reddit'), search = searchterm)
 
     @commands.command(
@@ -61,6 +58,7 @@ class reddit(commands.Cog):
         help="Miku browses on reddit"
     )
     async def reddit(self, ctx, *, search: str):
+        print(search, '|', end=' ')
         if 'r/' in search:
             #treat as subreddit
             search = search.split('/')
