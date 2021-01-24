@@ -44,6 +44,10 @@ async def on_ready():
         await asyncio.sleep(60)
 
 @bot.event
+async def on_command_error(ctx, error):
+    await ctx.send(error)
+
+@bot.event
 async def on_message(message):
     if not message.author.bot and message.channel.name == 'global':
         for guild in bot.guilds:
