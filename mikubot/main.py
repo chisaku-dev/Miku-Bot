@@ -13,7 +13,7 @@ def key():
         print('table initialized')
     except sqlite3.Error as e:
         print('Error', e)
-    choices = ['add new bot', 'run existing bot']
+    choices = ['add new bot', 'run existing bot', 'update key']
     con = sqlite3.connect('./mikubot/bot.db')
     while True:
         for i in range(0, len(choices)):
@@ -23,8 +23,13 @@ def key():
         if chosentask == 0:
             #add new bot
             try:
-                name = input('What is the name of the bot? ')
-                key = input('What is the bot key? (This will be stored in the local database called "bot.db") ')
+                name = input('What is the name of the bot?\n')
+                while True:
+                    key = input('What is the bot key? (This will be stored in the local database called "bot.db")\n')
+                    if len(key) > 20:
+                        break
+                    else:
+                        print('This is not a key')
                 insert_sql = 'INSERT INTO botkeys (botname, key) VALUES (?, ?)'
                 con.execute(insert_sql, (name, key))
                 con.commit()
@@ -38,11 +43,30 @@ def key():
                 botnames = cursor.fetchall()
                 for i in range(0, len(botnames)):
                     print(botnames[0][i])
-                name = input('Which bot do you want to run? Enter the name of the bot: ')
+                name = input('Enter the name of the bot: ')
                 selectkey = 'SELECT key FROM botkeys WHERE botname = ?;'
                 cursor.execute(selectkey, [name,])
                 key = cursor.fetchone()
                 return key[0]
+            except sqlite3.Error as e:
+                print('Error:', e)
+        elif chosentask == 2:
+            try:
+                cursor = con.cursor()
+                cursor.execute('SELECT botname FROM botkeys;')
+                botnames = cursor.fetchall()
+                for i in range(0, len(botnames)):
+                    print(botnames[0][i])
+                name = input('Enter the name of the bot: ')
+                while True:
+                    newkey = input('What is the new key?\n')
+                    if len(newkey) > 20:
+                        break
+                    else:
+                        print('This is not a key')
+                con.execute('UPDATE botkeys SET key = ? WHERE botname = ?', [name, newkey])
+                con.commit()
+                print('Key updated')
             except sqlite3.Error as e:
                 print('Error:', e)
         else:
