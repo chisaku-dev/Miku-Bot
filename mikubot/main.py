@@ -7,19 +7,19 @@ import sqlite3
 def key():
     try:
         con = sqlite3.connect('./mikubot/bot.db')
-        con.execute('CREATE TABLE IF NOT EXISTS botkeys (botname VARCHAR(255) NOT NULL UNIQUE, key VARCHAR(255) NOT NULL UNIQUE)')
+        con.execute('CREATE TABLE IF NOT EXISTS botkeys (botname VARCHAR(255) NOT NULL UNIQUE, key VARCHAR(255) NOT NULL UNIQUE);')
         con.commit()
         con.close()
         print('table initialized')
     except sqlite3.Error as e:
         print('Error', e)
     choices = ['add new bot', 'run existing bot']
+    con = sqlite3.connect('./mikubot/bot.db')
     while True:
         for i in range(0, len(choices)):
             print(i, choices[i])
-        chosentask = int(input("Enter what you want to do: "))
-        con = sqlite3.connect('./mikubot/bot.db')
-        cursor = con.cursor()
+        chosentask = input("Enter what you want to do: ")
+        chosentask = int(chosentask)
         if chosentask == 0:
             #add new bot
             try:
@@ -28,24 +28,25 @@ def key():
                 insert_sql = 'INSERT INTO botkeys (botname, key) VALUES (?, ?)'
                 con.execute(insert_sql, (name, key))
                 con.commit()
-                con.close()
-                return key
             except sqlite3.Error as e:
-                print('Error', e)
+                print('Error:', e)
         elif chosentask == 1:
             #run existing bot
             try:
-                cursor.execute('SELECT botname FROM botkeys')
+                cursor = con.cursor()
+                cursor.execute('SELECT botname FROM botkeys;')
                 botnames = cursor.fetchall()
-                for bots in botnames:
-                    print(bots)
-                botname = input('Which bot do you want to run? Enter the name of the bot:')
-                cursor.execute('SELECT key FROM botkeys WHERE botname = ?', (botname,))
+                for i in range(0, len(botnames)):
+                    print(botnames[0][i])
+                name = input('Which bot do you want to run? Enter the name of the bot: ')
+                selectkey = 'SELECT key FROM botkeys WHERE botname = ?;'
+                cursor.execute(selectkey, [name,])
                 key = cursor.fetchone()
-                cursor.close()
-                return key
+                return key[0]
             except sqlite3.Error as e:
-                print('Error', e)
+                print('Error:', e)
+        else:
+            print('That is not a valid task')
 
 #start bot
 def get_prefix(client, message):
