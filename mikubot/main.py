@@ -18,8 +18,7 @@ def key():
     while True:
         for i in range(0, len(choices)):
             print(i, choices[i])
-        chosentask = input("Enter what you want to do: ")
-        chosentask = int(chosentask)
+        chosentask = int(input("Enter what you want to do: "))
         if chosentask == 0:
             #add new bot
             try:
@@ -33,6 +32,7 @@ def key():
                 insert_sql = 'INSERT INTO botkeys (botname, key) VALUES (?, ?)'
                 con.execute(insert_sql, (name, key))
                 con.commit()
+                print(f'Successfully created bot {name}')
             except sqlite3.Error as e:
                 print('Error:', e)
         elif chosentask == 1:
@@ -104,7 +104,7 @@ bot.help_command = helpcommand()
 
 @bot.event
 async def on_ready():
-    print(f'Logged in as {bot.user.name} - {bot.user.id}')
+    print(f'Logged in as {bot.user.name} - {bot.user.id} Awaiting Reddit API...')
     for cog in cogs:
         bot.load_extension(cog)
     while True:

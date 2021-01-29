@@ -3,10 +3,36 @@ import discord
 
 import random
 import praw
+import sqlite3
 
+def redditkey():
+    con = sqlite3.connect('./mikubot/bot.db')
+    con.execute('CREATE TABLE IF NOT EXISTS reddit (id VARCHAR(255), secret TEXT);')
+    con.commit()
+    choices = ['add new reddit API key', 'use existing reddit API key']
+    for i in range(0, len(choices)):
+        print(i, choices[i])
+    choice = int(input('Enter what you want to: '))
+    if choice == 0:
+        con.execute('INSERT INTO reddit (id, secret) VALUES (?, ?)', (input('redditid: '), input('redditsecret: ')))
+        con.commit()
+        print('Successfully added reddit API key')
+    elif choice == 1:
+        cursor = con.cursor()
+        cursor.execute('SELECT id FROM reddit')
+        keys = cursor.fetchall()
+        for i in range(0, len(keys)):
+            print(i, keys[0][i])
+        key_to_use = int(input('Enter the number of the reddit api key you wish to use: '))
+        cursor.execute('SELECT secret FROM reddit WHERE id = ?', [keys[0][key_to_use],])
+        secret = cursor.fetchone()
+        print('Successfully connected!\nThe bot is not active')
+        return (keys[0][key_to_use], secret[0][0])
+
+cred = redditkey()
 redditapi = praw.Reddit(
-    client_id=input('Reddit client_id: '),
-    client_secret=input('Reddit client_secret: '),
+    client_id=cred[0],
+    client_secret=cred[1],
     user_agent="Discord"
 )
 
