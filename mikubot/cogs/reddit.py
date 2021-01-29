@@ -26,8 +26,8 @@ def redditkey():
         key_to_use = int(input('Enter the number of the reddit api key you wish to use: '))
         cursor.execute('SELECT secret FROM reddit WHERE id = ?', [keys[0][key_to_use],])
         secret = cursor.fetchone()
-        print('Successfully connected!\nThe bot is not active')
-        return (keys[0][key_to_use], secret[0][0])
+        print('Successfully connected!\nThe bot is now active')
+        return (keys[0][key_to_use], secret[0])
 
 cred = redditkey()
 redditapi = praw.Reddit(
