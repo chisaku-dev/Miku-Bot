@@ -67,7 +67,7 @@ class reddit(commands.Cog):
         help="Miku finds fanarts of husbandos!"
     )
     async def husbandoart(self, ctx):
-        searchtopics = ['husbando art', 'anime boy art', 'ganyu art', 'r/husbando']
+        searchtopics = ['husbando art', 'anime boy art', 'ganyu art', 'husbando']
         searchterm = searchtopics[random.randint(0, len(searchtopics)-1)]
         await ctx.invoke(self.bot.get_command('reddit'), search = searchterm)
 
@@ -100,7 +100,7 @@ class reddit(commands.Cog):
         limitsearch = 50
         while True:
             prawquery = redditapi.subreddit(sub).search(search, sort=randomsort[sortmethod], limit=limitsearch)
-            posts = [post for post in prawquery if 'jpg' in post.url or 'png' in post.url or 'gif' in post.url and not post.over_18]
+            posts = [post for post in prawquery if '.jpg' in post.url or '.png' in post.url or '.gif' in post.url and not post.over_18]
             if len(posts) > 10:
                 print(len(posts), 'posts found |', limitsearch, ' posts scope |', 'sorted with', randomsort[sortmethod], '|', (len(posts)*100)/limitsearch, '% suitable')
                 break
