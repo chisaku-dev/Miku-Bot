@@ -6,7 +6,7 @@ import praw
 import sqlite3
 
 def redditkey():
-    con = sqlite3.connect('./mikubot/bot.db')
+    con = sqlite3.connect('./bot.db')
     con.execute('CREATE TABLE IF NOT EXISTS reddit (id VARCHAR(255), secret TEXT);')
     con.commit()
     choices = ['add new reddit API key', 'use existing reddit API key']

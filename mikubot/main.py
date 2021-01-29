@@ -6,7 +6,7 @@ import sqlite3
 #saving bot tokens in database
 def key():
     try:
-        con = sqlite3.connect('./mikubot/bot.db')
+        con = sqlite3.connect('./bot.db')
         con.execute('CREATE TABLE IF NOT EXISTS botkeys (botname VARCHAR(255) NOT NULL UNIQUE, key VARCHAR(255) NOT NULL UNIQUE);')
         con.commit()
         con.close()
@@ -14,7 +14,7 @@ def key():
     except sqlite3.Error as e:
         print('Error', e)
     choices = ['add new bot', 'run existing bot', 'update key']
-    con = sqlite3.connect('./mikubot/bot.db')
+    con = sqlite3.connect('./bot.db')
     while True:
         for i in range(0, len(choices)):
             print(i, choices[i])
