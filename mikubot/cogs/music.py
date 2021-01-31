@@ -101,9 +101,8 @@ class Music(commands.Cog):
             try:
                 if not voicechannel.voice_client.is_playing() and not queue == []:
                     async with ctx.typing():
-                        player = await YTDLSource.from_url(queue[0], loop=self.bot.loop, stream=True)
+                        player = await YTDLSource.from_url(queue.pop(), loop=self.bot.loop, stream=True)
                         voicechannel.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-                        del queue[0]
                     await ctx.send('Now playing: {}'.format(player.title))
                 elif not voicechannel.voice_client.is_playing() and queue == []:
                     wait = 0
