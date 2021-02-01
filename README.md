@@ -10,7 +10,7 @@
             <p>You can invite Miku with <a href="https://top.gg/bot/617550552074551327">Miku Bot</a></p>
             <p>If you plan on running this bot on your own, you will need the discord bot token, reddit api id and secret</p>
             <p>This bot does NOT use the youtube api, but instead searches for music on it's own</p>
-            <p>Use this command to install the required libraries: pip install discord praw ytdl youtube_search pytube<p>
+            <p>Use this command to install the required libraries: pip install discord praw ytdl youtube_search youtube_dl pytube<p>
         </div>
         <br>
         <div style="border-radius: 8px; padding: 1cm; background-color:rgba(0, 0, 0, 0.05);">
