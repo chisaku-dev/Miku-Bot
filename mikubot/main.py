@@ -140,7 +140,7 @@ async def on_message(message):
                     try:
                         message_embed.set_image(url = message.attachments[0].url)
                     except:
-                        message_embed.set_image(url=None)
+                        await asyncio.sleep(0)
                     message_embed.description = message.content
                     await channel.send(embed=message_embed)
     else:
