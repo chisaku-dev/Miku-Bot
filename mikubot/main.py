@@ -119,34 +119,31 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_message(message):
-    try:
-        if not message.author.bot and message.channel.name == 'global':
-            for guild in bot.guilds:
-                for channel in guild.channels:
-                    if channel.name == 'global' and channel.id != message.channel.id:
-                        message_embed = discord.Embed()
-                        message_embed.set_footer(
-                            text=f'Sent by {message.author.name} at {message.author.guild.name}',
-                            icon_url=message.author.avatar_url
-                        )
-                        if '.gif' in message.content or '.png' in message.content or '.jpg' in message.content:
-                            seperated = message.content.split(' ')
-                            strip = 0
-                            while strip != len(seperated):
-                                if '.gif' in seperated[strip] or '.png' in seperated[strip] or '.jpg' in seperated[strip]:
-                                    break
-                                else:
-                                    strip = strip + 1
-                            message_embed.set_image(url = str(seperated[strip]))
-                        try:
-                            message_embed.set_image(url = message.attachments[0].url)
-                        except:
-                            message_embed.set_image(url=None)
-                        message_embed.description = message.content
-                        await channel.send(embed=message_embed)
-        else:
-            await bot.process_commands(message)
-    except:
-        await message.channel.send('Error: Global messaging only works in the global channel in a server')
+    if not message.author.bot and message.channel.name == 'global':
+        for guild in bot.guilds:
+            for channel in guild.channels:
+                if channel.name == 'global' and channel.id != message.channel.id:
+                    message_embed = discord.Embed()
+                    message_embed.set_footer(
+                        text=f'Sent by {message.author.name} at {message.author.guild.name}',
+                        icon_url=message.author.avatar_url
+                    )
+                    if '.gif' in message.content or '.png' in message.content or '.jpg' in message.content:
+                        seperated = message.content.split(' ')
+                        strip = 0
+                        while strip != len(seperated):
+                            if '.gif' in seperated[strip] or '.png' in seperated[strip] or '.jpg' in seperated[strip]:
+                                break
+                            else:
+                                strip = strip + 1
+                        message_embed.set_image(url = str(seperated[strip]))
+                    try:
+                        message_embed.set_image(url = message.attachments[0].url)
+                    except:
+                        message_embed.set_image(url=None)
+                    message_embed.description = message.content
+                    await channel.send(embed=message_embed)
+    else:
+        await bot.process_commands(message)
 
 bot.run(TOKEN, bot=True, reconnect=True)
