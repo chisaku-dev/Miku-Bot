@@ -88,6 +88,7 @@ class reddit(commands.Cog):
     )
     async def reddit(self, ctx, *, search: str):
         print(search, '|', end=' ')
+        originalsearch = search
         if 'r/' in search:
             #treat as subreddit
             search = search.split('/')
@@ -116,7 +117,10 @@ class reddit(commands.Cog):
                     await ctx.send('Not enough suitable posts were found')
                     return
         submission = posts[random.randint(0, len(posts)-1)]
-        await ctx.send(submission.url)
+        reddit_embed = discord.Embed()
+        reddit_embed.description = f'Miku found this post in r/{submission.subreddit.display_name} by {submission.author.name}'
+        reddit_embed.set_image(url=submission.url)
+        await ctx.send(embed=reddit_embed)
 
 def setup(bot):
     bot.add_cog(reddit(bot))
