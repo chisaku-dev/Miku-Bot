@@ -9,7 +9,6 @@ def key():
         con = sqlite3.connect('./bot.db')
         con.execute('CREATE TABLE IF NOT EXISTS botkeys (botname VARCHAR(255) NOT NULL UNIQUE, key VARCHAR(255) NOT NULL UNIQUE);')
         con.commit()
-        con.close()
         print('table initialized')
     except sqlite3.Error as e:
         print('Error', e)
@@ -123,24 +122,31 @@ async def on_message(message):
         for guild in bot.guilds:
             for channel in guild.channels:
                 if channel.name == 'global' and channel.id != message.channel.id:
+                    #if the channel is named global
                     message_embed = discord.Embed()
                     message_embed.set_footer(
                         text=f'Sent by {message.author.name} at {message.author.guild.name}',
                         icon_url=message.author.avatar_url
                     )
-                    if '.gif' in message.content or '.png' in message.content or '.jpg' in message.content:
+                    if 'http' in message.content:
                         seperated = message.content.split(' ')
                         strip = 0
                         while strip != len(seperated):
-                            if '.gif' in seperated[strip] or '.png' in seperated[strip] or '.jpg' in seperated[strip]:
+                            if 'http' in seperated[strip]:
+                                #locate the strip of text containing the link
                                 break
                             else:
                                 strip = strip + 1
-                        message_embed.set_image(url = str(seperated[strip]))
+                        if 'tenor' in seperated[strip]:
+                            await channel.send(seperated[strip])
+                        else:
+                            message_embed.set_image(url = str(seperated[strip]))
+                    #if there are attachments
                     try:
                         message_embed.set_image(url = message.attachments[0].url)
                     except:
                         await asyncio.sleep(0)
+                    #send the embed message
                     message_embed.description = message.content
                     await channel.send(embed=message_embed)
     else:
