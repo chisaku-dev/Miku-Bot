@@ -88,7 +88,6 @@ class reddit(commands.Cog):
     )
     async def reddit(self, ctx, *, search: str):
         print(search, '|', end=' ')
-        originalsearch = search
         if 'r/' in search:
             #treat as subreddit
             search = search.split('/')
