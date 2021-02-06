@@ -67,8 +67,7 @@ class reddit(commands.Cog):
         'mikasa ackerman', 'kyoani girl', 'genshin girl', 'hololive fanart', 'tohsaka', 'tsukasa yuzaki', 'fubuki',
         'okayu', 'gawr gura', 'rin kagamine', 'ddlc', 'meiko vocaloid', 'chizuru mizuhara', 'r/CuteAnimeArts', 'r/MoeStash',
         'r/AnimeWallpapersSFW', 'r/awwnime']
-        
-        searchterm = searchtopics[random.randint(0, len(searchtopics)-1)]
+        searchterm = random.choice(searchtopics)
         await ctx.invoke(self.bot.get_command('reddit'), search = searchterm)
     
     
@@ -80,7 +79,7 @@ class reddit(commands.Cog):
         searchtopics = ['anime boy', 'ganyu', 'husbando art', 'levi ackerman', 'sebastian michaelis', 'rin okumura',
         'makoto tachibana', 'takumi usui', 'sasuke', 'sasuke uchiha', 'todaroki shouto', 'todaroki', 'zero kiryu',
         'victor nikiforov', 'vildred']
-        searchterm = searchtopics[random.randint(0, len(searchtopics)-1)]
+        searchterm = random.choice(searchtopics)
         await ctx.invoke(self.bot.get_command('reddit'), search = searchterm)
 
     @commands.command(
@@ -90,8 +89,7 @@ class reddit(commands.Cog):
     async def meme(self, ctx):
         searchtopics = [' ', 'dank', 'anime', 'christian', 'tech ', 'funny ', 'coding ', 'reddit ', 'music ',
         'manga ', 'school ', 'relatable ']
-
-        searchterm = searchtopics[random.randint(0, len(searchtopics)-1)] + 'memes'
+        searchterm = random.choice(searchtopics) + 'memes'
         await ctx.invoke(self.bot.get_command('reddit'), search = searchterm)
 
     @commands.command(
@@ -99,29 +97,33 @@ class reddit(commands.Cog):
         help="Miku browses on reddit"
     )
     async def reddit(self, ctx, *, search: str):
-        print(search, '|', end=' ')
-        if 'r/' in search:
-            #treat as subreddit
-            search = search.split('/')
-            sub = search[1]
-            search = 'all'
-        else:
-            #treat as general search
-            sub = 'all'
-        #query reddit for posts
-        redditquery = redditapi.subreddit(sub).search(search)
-        #looks for a suitable posts
-        posts = [post for post in redditquery if '.jpg' in post.url or '.png' in post.url or '.gif' in post.url and not post.over_18]
-        #ensuring random post
-        post = random.choice(posts)
-        #finding a suitable post
-        submission = post
-        #discord embed setup
-        reddit_embed = discord.Embed()
-        reddit_embed.description = f'Miku found this post in r/{submission.subreddit.display_name} by {submission.author.name}'
-        reddit_embed.set_image(url=submission.url)
-        await ctx.send(embed=reddit_embed)
-        return
+        original_search = search
+        try:
+            print(search, '|', end=' ')
+            if 'r/' in search:
+                #treat as subreddit
+                search = search.split('/')
+                sub = search[1]
+                search = 'all'
+            else:
+                #treat as general search
+                sub = 'all'
+            #query reddit for posts
+            redditquery = redditapi.subreddit(sub).search(search)
+            #looks for a suitable posts
+            posts = [post for post in redditquery if '.jpg' in post.url or '.png' in post.url or '.gif' in post.url and not post.over_18]
+            #ensuring random post
+            post = random.choice(posts)
+            #finding a suitable post
+            submission = post
+            #discord embed setup
+            reddit_embed = discord.Embed()
+            reddit_embed.description = f'Miku found this post in r/{submission.subreddit.display_name} by {submission.author.name} when searching {original_search}'
+            reddit_embed.set_image(url=submission.url)
+            await ctx.send(embed=reddit_embed)
+            return
+        except:
+            await ctx.send(f'There was an error, this is likely caused by a lack of posts found in the query {original_search}. Please try again.')
 
 def setup(bot):
     bot.add_cog(reddit(bot))
