@@ -115,8 +115,8 @@ class reddit(commands.Cog):
                     sortmethod = 0
                 else:
                     sortmethod += 1
-                limitsearch += 10
-                if limitsearch == 200:
+                limitsearch += 25
+                if limitsearch == 75:
                     print('FAIL', len(posts), 'posts found |', limitsearch, ' posts scope |', 'sorted with', randomsort[sortmethod], '|', (len(posts)*100)/limitsearch, '% suitable')
                     await ctx.send('Not enough suitable posts were found')
                     return
