@@ -60,7 +60,7 @@ class reddit(commands.Cog):
         searchtopics = ['waifu art', 'anime girl art', 'pixiv girl', 'project sekai', 'zero two',
         'mikasa ackerman', 'kyoani girl', 'genshin girl', 'hololive fanart', 'tohsaka', 'tsukasa yuzaki', 'fubuki',
         'okayu', 'gawr gura', 'rin kagamine', 'ddlc', 'meiko vocaloid', 'chizuru mizuhara', 'r/CuteAnimeArts', 'r/MoeStash',
-        'r/AnimeWallpapersSFW']
+        'r/AnimeWallpapersSFW', 'r/awwnime']
         
         searchterm = searchtopics[random.randint(0, len(searchtopics)-1)]
         await ctx.invoke(self.bot.get_command('reddit'), search = searchterm)
@@ -108,19 +108,8 @@ class reddit(commands.Cog):
         while True:
             prawquery = redditapi.subreddit(sub).search(search, sort=randomsort[sortmethod], limit=limitsearch)
             posts = [post for post in prawquery if '.jpg' in post.url or '.png' in post.url or '.gif' in post.url and not post.over_18 and not post.subreddit.over18]
-            if len(posts) > 10:
-                print(len(posts), 'posts found |', limitsearch, ' posts scope |', 'sorted with', randomsort[sortmethod], '|', (len(posts)*100)/limitsearch, '% suitable')
+            if posts != None:
                 break
-            else:
-                if sortmethod == len(randomsort) - 1:
-                    sortmethod = 0
-                else:
-                    sortmethod += 1
-                limitsearch += 25
-                if limitsearch == 75:
-                    print('FAIL', len(posts), 'posts found |', limitsearch, ' posts scope |', 'sorted with', randomsort[sortmethod], '|', (len(posts)*100)/limitsearch, '% suitable')
-                    await ctx.send('Not enough suitable posts were found')
-                    return
         submission = posts[random.randint(0, len(posts)-1)]
         reddit_embed = discord.Embed()
         reddit_embed.description = f'Miku found this post in r/{submission.subreddit.display_name} by {submission.author.name}'
