@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-import random
 import asyncio
 import sqlite3
 #saving bot tokens in database
@@ -87,7 +86,9 @@ bot = commands.Bot(
 
 TOKEN = key()
 
-cogs = ['cogs.description', 'cogs.basic', 'cogs.utility', 'cogs.fun', 'cogs.reddit', 'cogs.music', 'cogs.chess']
+cogs = ['cogs.description', 'cogs.basic', 'cogs.utility', 'cogs.fun', 'cogs.music', 'cogs.chess']
+if input('Do you want to boot with reddit features? "yes" or "YES" to activate reddit, else enter to continue\n').lower() == 'yes':
+    cogs.append('cogs.reddit')
 
 #custom help
 class helpcommand(commands.MinimalHelpCommand):
@@ -103,7 +104,7 @@ bot.help_command = helpcommand()
 
 @bot.event
 async def on_ready():
-    print(f'Logged in as {bot.user.name} - {bot.user.id} Awaiting Reddit API...')
+    print(f'Logged in as {bot.user.name} - {bot.user.id}')
     for cog in cogs:
         bot.load_extension(cog)
     while True:

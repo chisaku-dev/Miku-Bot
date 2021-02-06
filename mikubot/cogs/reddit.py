@@ -1,6 +1,5 @@
 from discord.ext import commands
 import discord
-
 import random
 import praw
 import sqlite3
@@ -107,16 +106,16 @@ class reddit(commands.Cog):
         else:
             #treat as general search
             sub = 'all'
-        while True:
-            prawquery = redditapi.subreddit(sub).search(search, sort='random')
-            posts = [post for post in prawquery if '.jpg' in post.url or '.png' in post.url or '.gif' in post.url and not post.over_18 and not post.subreddit.over18]
-            if posts != None:
-                break
-        submission = posts[random.randint(0, len(posts)-1)]
-        reddit_embed = discord.Embed()
-        reddit_embed.description = f'Miku found this post in r/{submission.subreddit.display_name} by {submission.author.name}'
-        reddit_embed.set_image(url=submission.url)
-        await ctx.send(embed=reddit_embed)
+        for post in redditapi.subreddit(sub).search(search, sort='random'):
+            #finding a suitable post
+            if '.jpg' in post.url or '.png' in post.url or '.gif' in post.url and not post.over_18 and not post.subreddit.over18:
+                submission = post
+                #embed setup
+                reddit_embed = discord.Embed()
+                reddit_embed.description = f'Miku found this post in r/{submission.subreddit.display_name} by {submission.author.name}'
+                reddit_embed.set_image(url=submission.url)
+                await ctx.send(embed=reddit_embed)
+                return
 
 def setup(bot):
     bot.add_cog(reddit(bot))
