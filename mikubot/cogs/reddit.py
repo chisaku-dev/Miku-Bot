@@ -57,7 +57,7 @@ class reddit(commands.Cog):
         help="Miku finds fanarts of waifus!"
     )
     async def waifuart(self, ctx):
-        searchtopics = ['waifu', 'anime girl', 'pixiv girl', 'pixiv', 'project sekai', 'zero two',
+        searchtopics = ['waifu art', 'anime girl', 'pixiv girl', 'pixiv', 'project sekai', 'zero two',
         'mikasa ackerman', 'kyoani girl', 'genshin girl', 'hololive', 'tohsaka', 'tsukasa yuzaki', 'fubuki',
         'okayu', 'gawr gura', 'rin kagamine', 'ddlc', 'meiko', 'chizuru mizuhara']
         
@@ -70,7 +70,7 @@ class reddit(commands.Cog):
         help="Miku finds fanarts of husbandos!"
     )
     async def husbandoart(self, ctx):
-        searchtopics = ['anime boy', 'ganyu', 'husbando', 'levi ackerman', 'sebastian michaelis', 'rin okumura',
+        searchtopics = ['anime boy', 'ganyu', 'husbando art', 'levi ackerman', 'sebastian michaelis', 'rin okumura',
         'makoto tachibana', 'takumi usui', 'sasuke', 'sasuke uchiha', 'todaroki shouto', 'todaroki', 'zero kiryu',
         'victor nikiforov', 'vildred']
         searchterm = searchtopics[random.randint(0, len(searchtopics)-1)]
