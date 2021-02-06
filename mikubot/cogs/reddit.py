@@ -57,9 +57,10 @@ class reddit(commands.Cog):
         help="Miku finds fanarts of waifus!"
     )
     async def waifuart(self, ctx):
-        searchtopics = ['waifu art', 'anime girl', 'pixiv girl', 'pixiv', 'project sekai', 'zero two',
-        'mikasa ackerman', 'kyoani girl', 'genshin girl', 'hololive', 'tohsaka', 'tsukasa yuzaki', 'fubuki',
-        'okayu', 'gawr gura', 'rin kagamine', 'ddlc', 'meiko vocaloid', 'chizuru mizuhara']
+        searchtopics = ['waifu art', 'anime girl art', 'pixiv girl', 'project sekai', 'zero two',
+        'mikasa ackerman', 'kyoani girl', 'genshin girl', 'hololive fanart', 'tohsaka', 'tsukasa yuzaki', 'fubuki',
+        'okayu', 'gawr gura', 'rin kagamine', 'ddlc', 'meiko vocaloid', 'chizuru mizuhara', 'r/CuteAnimeArts', 'r/MoeStash'
+        'r/AnimeWallpapersSFW']
         
         searchterm = searchtopics[random.randint(0, len(searchtopics)-1)]
         await ctx.invoke(self.bot.get_command('reddit'), search = searchterm)
