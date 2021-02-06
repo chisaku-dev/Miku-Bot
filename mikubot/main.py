@@ -1,9 +1,9 @@
 import discord
 from discord.ext import commands
 import asyncio
-import sqlite3
 #saving bot tokens in database
 def key():
+    import sqlite3
     try:
         con = sqlite3.connect('./bot.db')
         con.execute('CREATE TABLE IF NOT EXISTS botkeys (botname VARCHAR(255) NOT NULL UNIQUE, key VARCHAR(255) NOT NULL UNIQUE);')
@@ -69,7 +69,6 @@ def key():
                 print('Error:', e)
         else:
             print('That is not a valid task')
-
 #start bot
 def get_prefix(client, message):
 
