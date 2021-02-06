@@ -108,7 +108,7 @@ class reddit(commands.Cog):
         while True:
             prawquery = redditapi.subreddit(sub).search(search, sort=randomsort[sortmethod], limit=limitsearch)
             posts = [post for post in prawquery if '.jpg' in post.url or '.png' in post.url or '.gif' in post.url and not post.over_18 and not post.subreddit.over18]
-            if len(posts) > 20:
+            if len(posts) > 10:
                 print(len(posts), 'posts found |', limitsearch, ' posts scope |', 'sorted with', randomsort[sortmethod], '|', (len(posts)*100)/limitsearch, '% suitable')
                 break
             else:
