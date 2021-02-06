@@ -61,7 +61,7 @@ class reddit(commands.Cog):
         'mikasa ackerman', 'kyoani girl', 'genshin girl', 'hololive', 'tohsaka', 'tsukasa yuzaki', 'fubuki',
         'okayu', 'gawr gura', 'rin kagamine', 'ddlc', 'meiko', 'chizuru mizuhara']
         
-        searchterm = searchtopics[random.randint(0, len(searchtopics)-1)] + ' art'
+        searchterm = searchtopics[random.randint(0, len(searchtopics)-1)]
         await ctx.invoke(self.bot.get_command('reddit'), search = searchterm)
     
     
@@ -73,7 +73,7 @@ class reddit(commands.Cog):
         searchtopics = ['anime boy', 'ganyu', 'husbando', 'levi ackerman', 'sebastian michaelis', 'rin okumura',
         'makoto tachibana', 'takumi usui', 'sasuke', 'sasuke uchiha', 'todaroki shouto', 'todaroki', 'zero kiryu',
         'victor nikiforov', 'vildred']
-        searchterm = searchtopics[random.randint(0, len(searchtopics)-1)] + ' art'
+        searchterm = searchtopics[random.randint(0, len(searchtopics)-1)]
         await ctx.invoke(self.bot.get_command('reddit'), search = searchterm)
 
     @commands.command(
