@@ -59,7 +59,7 @@ class reddit(commands.Cog):
     async def waifuart(self, ctx):
         searchtopics = ['waifu art', 'anime girl', 'pixiv girl', 'pixiv', 'project sekai', 'zero two',
         'mikasa ackerman', 'kyoani girl', 'genshin girl', 'hololive', 'tohsaka', 'tsukasa yuzaki', 'fubuki',
-        'okayu', 'gawr gura', 'rin kagamine', 'ddlc', 'meiko', 'chizuru mizuhara']
+        'okayu', 'gawr gura', 'rin kagamine', 'ddlc', 'meiko vocaloid', 'chizuru mizuhara']
         
         searchterm = searchtopics[random.randint(0, len(searchtopics)-1)]
         await ctx.invoke(self.bot.get_command('reddit'), search = searchterm)
@@ -81,9 +81,10 @@ class reddit(commands.Cog):
         help="Miku finds a meme"
     )
     async def meme(self, ctx):
-        searchtopics = ['memes', 'dankmemes', 'animememes', 'christianmemes', 'tech memes', 'funny memes', 'coding memes']
+        searchtopics = [' ', 'dank', 'anime', 'christian', 'tech ', 'funny ', 'coding ', 'reddit ', 'music ',
+        'manga ', 'school ', 'relatable ']
 
-        searchterm = searchtopics[random.randint(0, len(searchtopics)-1)]
+        searchterm = searchtopics[random.randint(0, len(searchtopics)-1)] + 'memes'
         await ctx.invoke(self.bot.get_command('reddit'), search = searchterm)
 
     @commands.command(
@@ -102,11 +103,11 @@ class reddit(commands.Cog):
             sub = 'all'
         randomsort = ['top', 'hot', 'relevance']
         sortmethod = random.randint(0, len(randomsort)-1)
-        limitsearch = 50
+        limitsearch = 25
         while True:
             prawquery = redditapi.subreddit(sub).search(search, sort=randomsort[sortmethod], limit=limitsearch)
-            posts = [post for post in prawquery if '.jpg' in post.url or '.png' in post.url or '.gif' in post.url and not post.over_18]
-            if len(posts) > 10:
+            posts = [post for post in prawquery if '.jpg' in post.url or '.png' in post.url or '.gif' in post.url and not post.over_18 and not post.subreddit.over18]
+            if len(posts) > 20:
                 print(len(posts), 'posts found |', limitsearch, ' posts scope |', 'sorted with', randomsort[sortmethod], '|', (len(posts)*100)/limitsearch, '% suitable')
                 break
             else:
@@ -114,7 +115,7 @@ class reddit(commands.Cog):
                     sortmethod = 0
                 else:
                     sortmethod += 1
-                limitsearch += 25
+                limitsearch += 10
                 if limitsearch == 200:
                     print('FAIL', len(posts), 'posts found |', limitsearch, ' posts scope |', 'sorted with', randomsort[sortmethod], '|', (len(posts)*100)/limitsearch, '% suitable')
                     await ctx.send('Not enough suitable posts were found')
