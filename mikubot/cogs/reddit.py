@@ -109,12 +109,11 @@ class reddit(commands.Cog):
             #treat as general search
             sub = 'all'
         #query reddit for posts
-        redditquery = redditapi.subreddit(sub).search(search, sort='random')
+        redditquery = redditapi.subreddit(sub).search(search)
         #looks for a suitable posts
         posts = [post for post in redditquery if '.jpg' in post.url or '.png' in post.url or '.gif' in post.url and not post.over_18]
         #ensuring random post
-        random_post_number = random.randint(0, len(posts)-1)
-        post = posts[random_post_number]
+        post = random.choice(posts)
         #finding a suitable post
         submission = post
         #discord embed setup
