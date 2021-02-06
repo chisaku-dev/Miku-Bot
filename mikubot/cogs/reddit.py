@@ -102,11 +102,8 @@ class reddit(commands.Cog):
         else:
             #treat as general search
             sub = 'all'
-        randomsort = ['top', 'hot', 'relevance']
-        sortmethod = random.randint(0, len(randomsort)-1)
-        limitsearch = 25
         while True:
-            prawquery = redditapi.subreddit(sub).search(search, sort=randomsort[sortmethod], limit=limitsearch)
+            prawquery = redditapi.subreddit(sub).search(search, sort='random')
             posts = [post for post in prawquery if '.jpg' in post.url or '.png' in post.url or '.gif' in post.url and not post.over_18 and not post.subreddit.over18]
             if posts != None:
                 break
