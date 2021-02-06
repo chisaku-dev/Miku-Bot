@@ -38,7 +38,9 @@ redditapi = praw.Reddit(
     client_id=cred[0],
     client_secret=cred[1],
     #the user_agent just identifies to reddit what browser it's connecting from.
-    user_agent="Discord"
+    user_agent="Discord",
+    #asyncpraw is causing issues and will be worked upon
+    check_for_async=False
 )
 
 class reddit(commands.Cog):
@@ -106,16 +108,21 @@ class reddit(commands.Cog):
         else:
             #treat as general search
             sub = 'all'
-        for post in redditapi.subreddit(sub).search(search, sort='random'):
-            #finding a suitable post
-            if '.jpg' in post.url or '.png' in post.url or '.gif' in post.url and not post.over_18 and not post.subreddit.over18:
-                submission = post
-                #embed setup
-                reddit_embed = discord.Embed()
-                reddit_embed.description = f'Miku found this post in r/{submission.subreddit.display_name} by {submission.author.name}'
-                reddit_embed.set_image(url=submission.url)
-                await ctx.send(embed=reddit_embed)
-                return
+        #query reddit for posts
+        redditquery = redditapi.subreddit(sub).search(search, sort='random')
+        #looks for a suitable posts
+        posts = [post for post in redditquery if '.jpg' in post.url or '.png' in post.url or '.gif' in post.url and not post.over_18]
+        #ensuring random post
+        random_post_number = random.randint(0, len(posts)-1)
+        post = posts[random_post_number]
+        #finding a suitable post
+        submission = post
+        #discord embed setup
+        reddit_embed = discord.Embed()
+        reddit_embed.description = f'Miku found this post in r/{submission.subreddit.display_name} by {submission.author.name}'
+        reddit_embed.set_image(url=submission.url)
+        await ctx.send(embed=reddit_embed)
+        return
 
 def setup(bot):
     bot.add_cog(reddit(bot))
