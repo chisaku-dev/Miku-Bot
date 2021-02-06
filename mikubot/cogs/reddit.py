@@ -4,7 +4,7 @@ import discord
 import random
 import praw
 import sqlite3
-
+#reddit login script
 def redditkey():
     con = sqlite3.connect('./bot.db')
     con.execute('CREATE TABLE IF NOT EXISTS reddit (id VARCHAR(255), secret TEXT);')
@@ -15,10 +15,12 @@ def redditkey():
             print(i, choices[i])
         choice = int(input('Enter what you want to: '))
         if choice == 0:
+            #adds to sql database the reddit credentials
             con.execute('INSERT INTO reddit (id, secret) VALUES (?, ?)', (input('redditid: '), input('redditsecret: ')))
             con.commit()
             print('Successfully added reddit API key')
         elif choice == 1:
+            #login with stored credentials
             cursor = con.cursor()
             cursor.execute('SELECT id FROM reddit')
             keys = cursor.fetchall()
@@ -27,13 +29,16 @@ def redditkey():
             key_to_use = int(input('Enter the number of the reddit api key you wish to use: '))
             cursor.execute('SELECT secret FROM reddit WHERE id = ?', [keys[0][key_to_use],])
             secret = cursor.fetchone()
+            #upon success
             print('Successfully connected!\nThe bot is now active')
+            #returns as tuple
             return (keys[0][key_to_use], secret[0])
 
 cred = redditkey()
 redditapi = praw.Reddit(
     client_id=cred[0],
     client_secret=cred[1],
+    #the user_agent just identifies to reddit what browser it's connecting from.
     user_agent="Discord"
 )
 
