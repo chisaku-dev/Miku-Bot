@@ -64,7 +64,7 @@ class reddit(commands.Cog):
     
     def __init__(self, bot):
         self.bot = bot
-    
+
     @commands.command(
         name="art",
         help="Miku finds a fanart of herself!"
@@ -86,8 +86,7 @@ class reddit(commands.Cog):
         'r/AnimeWallpapersSFW', 'r/awwnime']
         searchterm = random.choice(searchtopics)
         await ctx.invoke(self.bot.get_command('reddit'), search = searchterm)
-    
-    
+     
     @commands.command(
         name="husbandoart",
         help="Miku finds fanarts of husbandos!"
@@ -101,7 +100,7 @@ class reddit(commands.Cog):
 
     @commands.command(
         name="meme",
-        help="Miku finds a meme"
+        help="finds a meme"
     )
     async def meme(self, ctx):
         searchtopics = [' ', 'dank', 'anime', 'christian', 'tech ', 'funny ', 'coding ', 'reddit ', 'music ',
@@ -111,7 +110,7 @@ class reddit(commands.Cog):
 
     @commands.command(
         name="reddit",
-        help="Miku browses on reddit"
+        help="browses on reddit"
     )
     async def reddit(self, ctx, *, search: str):
         original_search = search
@@ -135,7 +134,7 @@ class reddit(commands.Cog):
             submission = post
             #discord embed setup
             reddit_embed = discord.Embed()
-            reddit_embed.description = f'Miku found this post in r/{submission.subreddit.display_name} by {submission.author.name} when searching {original_search}'
+            reddit_embed.description = f'{self.bot.user.name} found this post in r/{submission.subreddit.display_name} by {submission.author.name} when searching {original_search}'
             reddit_embed.set_image(url=submission.url)
             await ctx.send(embed=reddit_embed)
             return
