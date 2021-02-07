@@ -1,37 +1,54 @@
+from tkinter import *
 from discord.ext import commands
 import discord
 import random
-import praw
 import sqlite3
+import praw
+
 #reddit login script
 def redditkey():
-    con = sqlite3.connect('./cogs/reddit.db')
-    con.execute('CREATE TABLE IF NOT EXISTS reddit (id VARCHAR(255), secret TEXT);')
-    con.commit()
-    choices = ['add new reddit API key', 'use existing reddit API key']
-    while True:
-        for i in range(0, len(choices)):
-            print(i, choices[i])
-        choice = int(input('Enter what you want to: '))
-        if choice == 0:
-            #adds to sql database the reddit credentials
-            con.execute('INSERT INTO reddit (id, secret) VALUES (?, ?)', (input('redditid: '), input('redditsecret: ')))
-            con.commit()
-            print('Successfully added reddit API key')
-        elif choice == 1:
-            #login with stored credentials
-            cursor = con.cursor()
-            cursor.execute('SELECT id FROM reddit')
-            keys = cursor.fetchall()
-            for i in range(0, len(keys)):
-                print(i, keys[0][i])
-            key_to_use = int(input('Enter the number of the reddit api key you wish to use: '))
-            cursor.execute('SELECT secret FROM reddit WHERE id = ?', [keys[0][key_to_use],])
-            secret = cursor.fetchone()
-            #upon success
-            print('Successfully connected!\nThe bot is now active')
-            #returns as tuple
-            return (keys[0][key_to_use], secret[0])
+    #saving information to database
+    def save_information(redditid, redditsecret):
+        conn = sqlite3.connect('./cogs/reddit.db')
+        conn.execute('''CREATE TABLE IF NOT EXISTS saved_information (
+            redditid text,
+            redditsecret text);
+            ''')
+        conn.commit()
+        conn.execute('''INSERT INTO saved_information (redditid, redditsecret)
+            VALUES (?, ?)''', (redditid, redditsecret))
+        conn.commit()
+        conn.close()
+        return(redditid, redditsecret)
+
+    conn = sqlite3.connect('./cogs/reddit.db')
+    try:
+        #attempt login discord
+        cur = conn.cursor()
+        cur.execute('SELECT redditid, redditsecret FROM saved_information;')
+        saved_information_tuple = cur.fetchone()
+        conn.close()
+        return(saved_information_tuple[0], saved_information_tuple[1])
+    except sqlite3.Error:
+        #upon error start ui
+        #window
+        tkWindow = Tk()  
+        tkWindow.geometry('400x150')  
+        tkWindow.title('reddit.py by Chisaki-Dev')
+        #redditid label and text entry box
+        redditidLabel = Label(tkWindow, text="redditid").grid(row=0, column=0)
+        redditid = StringVar()
+        redditidEntry = Entry(tkWindow, textvariable=redditid).grid(row=0, column=1)  
+
+        #redditsecret label and text entry box
+        redditsecretLabel = Label(tkWindow, text="redditsecret").grid(row=1, column=0)
+        redditsecret = StringVar()
+        redditsecretEntry = Entry(tkWindow, textvariable=redditsecret).grid(row=1, column=1)  
+
+        #startup button
+        startupButton = Button(tkWindow, text="start reddit.py", command=lambda:[tkWindow.withdraw(), save_information(redditid.get(), redditsecret.get())]).grid(row=6, column=1)  
+
+        tkWindow.mainloop()
 
 cred = redditkey()
 redditapi = praw.Reddit(
