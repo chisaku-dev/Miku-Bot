@@ -8,3 +8,4 @@ mikubot/cogs/__pycache__/reddit.cpython-39.pyc
 mikubot/cogs/__pycache__/utility.cpython-39.pyc
 mikubot/bot.db
 mikubot/__pycache__/main.cpython-39.pyc
+mikubot/cogs/reddit.db

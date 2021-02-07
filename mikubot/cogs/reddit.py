@@ -5,7 +5,7 @@ import praw
 import sqlite3
 #reddit login script
 def redditkey():
-    con = sqlite3.connect('./bot.db')
+    con = sqlite3.connect('./cogs/reddit.db')
     con.execute('CREATE TABLE IF NOT EXISTS reddit (id VARCHAR(255), secret TEXT);')
     con.commit()
     choices = ['add new reddit API key', 'use existing reddit API key']
