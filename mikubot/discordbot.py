@@ -44,7 +44,7 @@ def startup(name, token, prefix):
         while True:
             await bot.change_presence(activity=discord.Activity(
                 type = discord.ActivityType.listening,
-                name=(f" {len(bot.guilds)} servers!")))
+                name=(f"Hatsune Miku on {len(bot.guilds)} servers!")))
             await asyncio.sleep(60)
 
     @bot.event
