@@ -64,7 +64,7 @@ class reddit(commands.Cog):
     
     def __init__(self, bot):
         self.bot = bot
-
+    
     @commands.command(
         name="art",
         help="Miku finds a fanart of herself!"
