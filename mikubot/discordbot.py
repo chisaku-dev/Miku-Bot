@@ -3,11 +3,28 @@ import discord
 from discord.ext import commands
 
 import os
-import asyncio
+
+async def cog(bot):
+    #refresh cogs
+    cogs = [f for f in os.listdir('./cogs') if f.endswith('.py')]
+    for cog in cogs:
+        cog = cog.replace('.py', '')
+        try:
+            bot.load_extension(f'cogs.{cog}')
+            print(f'{cog} is loaded')
+        except discord.ext.commands.ExtensionAlreadyLoaded:
+            print(f'{cog} is already loaded; There may be a duplicate file')
+        except:
+            print(f'There was an error with {cog}')
+    
+async def background_activities(bot):
+    await bot.change_presence(activity=discord.Activity(
+                type = discord.ActivityType.listening,
+                name=(f" {len(bot.guilds)} servers!")))
 
 #bot main
 def startup(name, token, prefix):
-    #start bot
+    #declare bot
     bot = commands.Bot(
         command_prefix=prefix,
         help=f'A {name} bot',
@@ -22,31 +39,17 @@ def startup(name, token, prefix):
             for page in self.paginator.pages:
                 e.description += page
             await destination.send(embed=e)
-
     bot.help_command = helpcommand()
 
     @bot.event
+    #starting up bot
     async def on_ready():
+        await cog(bot)
         print(f'Logged in as {bot.user.name} - {bot.user.id}')
-        #importing all plugins found in cogs folder
-        cogs = [f for f in os.listdir('./cogs') if f.endswith('.py')]
-        if not len(cogs) == 0:
-            for cog in cogs:
-                try:
-                    print(f'{cog} was detected and initializing')
-                    cog = cog.replace('.py', '')
-                    bot.load_extension(f'cogs.{cog}')
-                except:
-                    print(f'There was an error at {cog}')
-        else:
-            print('No plugins were detected')
-        #starting up bot
         while True:
-            await bot.change_presence(activity=discord.Activity(
-                type = discord.ActivityType.listening,
-                name=(f"Hatsune Miku on {len(bot.guilds)} servers!")))
-            await asyncio.sleep(60)
-
+            await background_activities(bot)
+    
+    #when bot has a command error
     @bot.event
     async def on_command_error(ctx, error):
         await ctx.send(error)

@@ -10,3 +10,4 @@ mikubot/bot.db
 mikubot/__pycache__/main.cpython-39.pyc
 mikubot/cogs/reddit.db
 mikubot/__pycache__/discordbot.cpython-39.pyc
+mikubot/cogs/__pycache__/images.cpython-39.pyc
