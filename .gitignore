@@ -6,7 +6,7 @@ mikubot/cogs/__pycache__/fun.cpython-39.pyc
 mikubot/cogs/__pycache__/music.cpython-39.pyc
 mikubot/cogs/__pycache__/reddit.cpython-39.pyc
 mikubot/cogs/__pycache__/utility.cpython-39.pyc
-mikubot/bot.db
+mikubot/save_file.db
 mikubot/__pycache__/main.cpython-39.pyc
 mikubot/cogs/reddit.db
 mikubot/__pycache__/discordbot.cpython-39.pyc
