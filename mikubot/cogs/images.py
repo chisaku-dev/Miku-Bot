@@ -1,7 +1,6 @@
 import requests  
 import bs4
 import random
-import discord
 from discord.ext import commands
 
 #get link and prepare for scraping

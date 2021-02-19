@@ -1,8 +1,8 @@
 #discord
 import discord
 from discord.ext import commands
-
 import os
+import asyncio
 
 async def cog(bot):
     #refresh cogs
@@ -18,16 +18,18 @@ async def cog(bot):
             print(f'There was an error with {cog}')
     
 async def background_activities(bot):
+    #bot server count is reported in activity
+    await asyncio.sleep(15)
     await bot.change_presence(activity=discord.Activity(
                 type = discord.ActivityType.listening,
                 name=("{} servers!").format(len(bot.guilds))))
 
 #bot main
-def startup(name, token, prefix):
+def startup(token, prefix):
     #declare bot
     bot = commands.Bot(
         command_prefix=prefix,
-        help=f'A {name} bot',
+        help=f'A bot made with Easybot by Chisaku-Dev',
         case_insensitive=True
     )
 
