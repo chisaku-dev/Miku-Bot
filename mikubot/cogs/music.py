@@ -104,8 +104,11 @@ class Music(commands.Cog):
                         player = await YTDLSource.from_url(queue.pop(), loop=self.bot.loop, stream=True)
                         voicechannel.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
                     await ctx.send('Now playing: {}'.format(player.title))
-            except:
                 await asyncio.sleep(1)
+            except:
+                await ctx.invoke(self.bot.get_command('stop'))
+                await ctx.send('Queue is Empty')
+                return
 
     @commands.command(
         name="queue",
