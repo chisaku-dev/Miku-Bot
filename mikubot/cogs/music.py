@@ -71,7 +71,7 @@ class Music(commands.Cog):
         if ctx.voice_client is None:
             global queue
             queue = []
-        else:
+        if ctx.voice_client is not None:
             if not 'https' in search:
                 results = YoutubeSearch(search, max_results=1).to_dict()
                 urlsuffix = results[0].get('url_suffix')
