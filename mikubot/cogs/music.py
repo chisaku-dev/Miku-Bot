@@ -68,9 +68,12 @@ class Music(commands.Cog):
         help="Miku searches then adds link to queue for playing!"
     )
     async def play(self, ctx, *, search: str):
-        if ctx.voice_client is None:
-            global queue
-            queue = []
+        try:
+            if not ctx.voice_client.is_playing():
+                global queue
+                queue = []
+        except:
+            return
         if not 'https' in search:
             results = YoutubeSearch(search, max_results=1).to_dict()
             urlsuffix = results[0].get('url_suffix')
@@ -95,22 +98,31 @@ class Music(commands.Cog):
                 queue.append(url)
                 await ctx.send(f'{url} was added to queue')
         #player
-        if not ctx.voice_client is None:
-            while queue != []:
-                #get seconds to wait
-                async with ctx.typing():
-                    player = await YTDLSource.from_url(queue.pop(), loop=self.bot.loop, stream=True)
-                    ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-                await ctx.send('Now playing: {}'.format(player.title))
-                while ctx.voice_client.is_playing():
-                    await asyncio.sleep(5)
+        try:
+            if not ctx.voice_client.is_playing():
+                while queue != []:
+                    async with ctx.typing():
+                        player = await YTDLSource.from_url(queue.pop(), loop=self.bot.loop, stream=True)
+                        ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+                    await ctx.send('Now playing: {}'.format(player.title))
+                    while ctx.voice_client.is_playing():
+                        await asyncio.sleep(5)
+        except:
+            await ctx.send('Stopped playing')
+            return
                 
     @commands.command(
         name="queue",
         help="View the queue"
     )
     async def queue(self, ctx):
-        await ctx.send(queue)
+        try:
+            if queue != []:
+                await ctx.send(queue)
+            else:
+                await ctx.send('The queue is empty')
+        except:
+            await ctx.send('I am not playing anything right now')
 
     @commands.command(
         name="remove",
@@ -137,8 +149,7 @@ class Music(commands.Cog):
         help="clears the queue"
     )
     async def clearqueue(self, ctx):
-        while len(queue) != 0:
-            queue.remove(queue[0])
+        queue = []
 
     @commands.command()
     async def stop(self, ctx):
