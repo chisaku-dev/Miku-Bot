@@ -65,14 +65,12 @@ class Music(commands.Cog):
 
     @commands.command(
         name="play",
-        help="Miku searches then plays music in a voice channel!"
+        help="Miku searches then adds link to queue for playing!"
     )
     async def play(self, ctx, *, search: str):
         if not ctx.voice_client.is_playing():
             global queue
             queue = []
-            global voicechannel
-            voicechannel = ctx
         if not 'https' in search:
             results = YoutubeSearch(search, max_results=1).to_dict()
             urlsuffix = results[0].get('url_suffix')
@@ -96,15 +94,17 @@ class Music(commands.Cog):
             else:
                 queue.append(url)
                 await ctx.send(f'{url} was added to queue')
-        
-        while True:
-            if not voicechannel.voice_client.is_playing() and not queue == []:
+        #player
+        if not ctx.voice_client.is_playing():
+            while queue != []:
+                #get seconds to wait
                 async with ctx.typing():
                     player = await YTDLSource.from_url(queue.pop(), loop=self.bot.loop, stream=True)
-                    voicechannel.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+                    ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
                 await ctx.send('Now playing: {}'.format(player.title))
-            await asyncio.sleep(5)
-
+                while ctx.voice_client.is_playing():
+                    await asyncio.sleep(5)
+                
     @commands.command(
         name="queue",
         help="View the queue"
@@ -144,7 +144,8 @@ class Music(commands.Cog):
     async def stop(self, ctx):
         """Stops and disconnects the bot from voice"""
         await ctx.invoke(self.bot.get_command('clearqueue'))
-        await ctx.voice_client.disconnect()
+        try: await ctx.voice_client.disconnect()
+        except: return
         return
 
     @play.before_invoke
