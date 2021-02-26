@@ -95,7 +95,7 @@ class Music(commands.Cog):
                 queue.append(url)
                 await ctx.send(f'{url} was added to queue')
         #player
-        if not ctx.voice_client.is_playing():
+        if not ctx.voice_client is None:
             while queue != []:
                 #get seconds to wait
                 async with ctx.typing():
