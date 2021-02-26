@@ -71,40 +71,39 @@ class Music(commands.Cog):
         if ctx.voice_client is None:
             global queue
             queue = []
-        if ctx.voice_client is not None:
-            if not 'https' in search:
-                results = YoutubeSearch(search, max_results=1).to_dict()
-                urlsuffix = results[0].get('url_suffix')
-                url = ('https://www.youtube.com' +urlsuffix)
-                await ctx.send('Added to queue: {}'.format(results[0].get('title')))
+        if not 'https' in search:
+            results = YoutubeSearch(search, max_results=1).to_dict()
+            urlsuffix = results[0].get('url_suffix')
+            url = ('https://www.youtube.com' +urlsuffix)
+            await ctx.send('Added to queue: {}'.format(results[0].get('title')))
+            queue.append(url)
+        elif 'playlist?' in search:
+            playlist = Playlist(search)
+            playlist._video_regex = re.compile(r"\"url\":\"(/watch\?v=[\w-]*)")
+            counter = 0
+            for url in playlist.video_urls:
+                counter = counter + 1
+                if counter == 40:
+                    break
                 queue.append(url)
-            elif 'playlist?' in search:
-                playlist = Playlist(search)
-                playlist._video_regex = re.compile(r"\"url\":\"(/watch\?v=[\w-]*)")
-                counter = 0
-                for url in playlist.video_urls:
-                    counter = counter + 1
-                    if counter == 40:
-                        break
-                    queue.append(url)
-                await ctx.send(f"{counter} songs were added to queue")
+            await ctx.send(f"{counter} songs were added to queue")
+        else:
+            url = search
+            if not 'youtube' in url:
+                await ctx.send('This is not a Youtube link, I cannot open this!')
             else:
-                url = search
-                if not 'youtube' in url:
-                    await ctx.send('This is not a Youtube link, I cannot open this!')
-                else:
-                    queue.append(url)
-                    await ctx.send(f'{url} was added to queue')
-            #player
-            if not ctx.voice_client.is_playing():
-                while queue != []:
-                    #get seconds to wait
-                    async with ctx.typing():
-                        player = await YTDLSource.from_url(queue.pop(), loop=self.bot.loop, stream=True)
-                        ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-                    await ctx.send('Now playing: {}'.format(player.title))
-                    while ctx.voice_client.is_playing():
-                        await asyncio.sleep(5)
+                queue.append(url)
+                await ctx.send(f'{url} was added to queue')
+        #player
+        if not ctx.voice_client.is_playing():
+            while queue != []:
+                #get seconds to wait
+                async with ctx.typing():
+                    player = await YTDLSource.from_url(queue.pop(), loop=self.bot.loop, stream=True)
+                    ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+                await ctx.send('Now playing: {}'.format(player.title))
+                while ctx.voice_client.is_playing():
+                    await asyncio.sleep(5)
                 
     @commands.command(
         name="queue",
