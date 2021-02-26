@@ -144,8 +144,8 @@ class Music(commands.Cog):
     async def stop(self, ctx):
         """Stops and disconnects the bot from voice"""
         await ctx.invoke(self.bot.get_command('clearqueue'))
-        try: await ctx.voice_client.disconnect()
-        except: return
+        if not ctx.voice_client is None:
+            await ctx.voice_client.disconnect()
         return
 
     @play.before_invoke
@@ -155,7 +155,6 @@ class Music(commands.Cog):
                 await ctx.author.voice.channel.connect()
             else:
                 await ctx.send("You are not connected to a voice channel.")
-                raise commands.CommandError("Author not connected to a voice channel.")
 
 def setup(bot):
     bot.add_cog(Music(bot))
