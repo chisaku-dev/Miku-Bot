@@ -83,7 +83,7 @@ class Music(commands.Cog):
             counter = 0
             for url in playlist.video_urls:
                 counter = counter + 1
-                if counter == 20:
+                if counter == 40:
                     break
                 queue.append(url)
             await ctx.send(f"{counter} songs were added to queue")
