@@ -68,7 +68,7 @@ class Music(commands.Cog):
         help="Miku searches then adds link to queue for playing!"
     )
     async def play(self, ctx, *, search: str):
-        if not ctx.voice_client.is_playing():
+        if ctx.voice_client is None:
             global queue
             queue = []
         if not 'https' in search:
