@@ -102,7 +102,9 @@ class Music(commands.Cog):
             if not ctx.voice_client.is_playing():
                 while queue != []:
                     async with ctx.typing():
-                        player = await YTDLSource.from_url(queue.pop(), loop=self.bot.loop, stream=True)
+                        playurl = queue[0]
+                        queue.remove(playurl)
+                        player = await YTDLSource.from_url(playurl, loop=self.bot.loop, stream=True)
                         ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
                     await ctx.send('Now playing: {}'.format(player.title))
                     while ctx.voice_client.is_playing():
@@ -118,7 +120,10 @@ class Music(commands.Cog):
     async def queue(self, ctx):
         try:
             if queue != []:
-                await ctx.send(queue)
+                separator = '\n'
+                queuelist = separator.join(queue)
+                queue_embed = discord.Embed(title='Queue', description=queuelist)
+                await ctx.send(embed=queue_embed)
             else:
                 await ctx.send('The queue is empty')
         except:
@@ -126,13 +131,22 @@ class Music(commands.Cog):
 
     @commands.command(
         name="remove",
-        help="Removes a url from the queue"
+        help="Removes a song from the queue"
     )
-    async def remove(self, ctx, url):
-        if url in queue:
-            queue.remove(url)
-        else:
-            print(f'the url {url} does not exist in the queue')
+    async def remove(self, ctx):
+        try:
+            await ctx.invoke(self.bot.get_command('queue'))
+        except:
+            return
+        await ctx.send('Which song do you wish to remove? (copy the entire url and paste it)')
+        msg = await self.bot.wait_for('message')
+        if msg.content in queue:
+            queue.remove(msg.content)
+            await ctx.send(f'{msg.content} was removed from queue')
+            return
+            
+            
+        
 
     @commands.command()
     async def volume(self, ctx, volume: int):
