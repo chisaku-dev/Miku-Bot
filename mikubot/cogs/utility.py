@@ -17,7 +17,7 @@ class Utility(commands.Cog):
     async def support(self, ctx):
         def check(ms):
             return ms.channel == ctx.message.channel and ms.author == ctx.message.author
-        await ctx.send('Write what issues you have, this will be sent through Miku bot to the support channel in https://discord.gg/nQ4gNCtebV')
+        await ctx.send('Write what issues you have, this will be sent through Miku bot to Mori')
         msg = await self.bot.wait_for('message', check=check)
         message_embed = discord.Embed(
                     color=0xE74C3C
