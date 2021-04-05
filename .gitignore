@@ -11,3 +11,17 @@ mikubot/__pycache__/main.cpython-39.pyc
 mikubot/cogs/reddit.db
 mikubot/__pycache__/discordbot.cpython-39.pyc
 mikubot/cogs/__pycache__/images.cpython-39.pyc
+mikubot/__pycache__/discordbot.cpython-38.pyc
+mikubot/cogs/__pycache__/basic.cpython-38.pyc
+mikubot/cogs/__pycache__/chess.cpython-38.pyc
+mikubot/cogs/__pycache__/description.cpython-38.pyc
+mikubot/cogs/__pycache__/fun.cpython-38.pyc
+mikubot/cogs/__pycache__/global.cpython-38.pyc
+mikubot/cogs/__pycache__/images.cpython-38.pyc
+mikubot/cogs/__pycache__/invitation.cpython-38.pyc
+mikubot/cogs/__pycache__/invitation.cpython-39.pyc
+mikubot/cogs/__pycache__/music.cpython-38.pyc
+mikubot/cogs/__pycache__/reddit.cpython-38.pyc
+mikubot/cogs/__pycache__/translate.cpython-38.pyc
+mikubot/cogs/__pycache__/utility.cpython-38.pyc
+save_file.db
