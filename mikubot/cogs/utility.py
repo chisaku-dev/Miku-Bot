@@ -28,7 +28,7 @@ class Utility(commands.Cog):
                     )
         message_embed.description = msg.content
         await self.bot.get_channel(828552431721119795).send(embed=message_embed)
-        await ctx.send("the message was sent successfully, If you need assistance, please join the server mentioned above. Support is offered voluntarily and nobody is forced to assist you in your perils.")
+        await ctx.send("the message was sent successfully")
     
     #embed generator
     @commands.command(
