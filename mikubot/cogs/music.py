@@ -1,4 +1,5 @@
 import asyncio
+from os import name
 
 import discord
 import youtube_dl
@@ -78,7 +79,7 @@ class Music(commands.Cog):
             results = YoutubeSearch(search, max_results=1).to_dict()
             urlsuffix = results[0].get('url_suffix')
             url = ('https://www.youtube.com' +urlsuffix)
-            await ctx.send('Added to queue: {}'.format(results[0].get('title')))
+            await ctx.send('Added to queue: {}'.format(results[0].get('title')), delete_after=5)
             queue.append(url)
         elif 'playlist?' in search:
             playlist = Playlist(search)
@@ -89,30 +90,37 @@ class Music(commands.Cog):
                 if counter == 40:
                     break
                 queue.append(url)
-            await ctx.send(f"{counter} songs were added to queue")
+            await ctx.send(f"{counter} songs were added to queue", delete_after=5)
         else:
             url = search
             if not 'youtube' or not 'youtu.be' in url:
                 await ctx.send('This is not a Youtube link, I cannot open this!')
             else:
                 queue.append(url)
-                await ctx.send(f'{url} was added to queue')
+                await ctx.send(f'{url} was added to queue', delete_after=5)
         #player
         try:
             if not ctx.voice_client.is_playing():
+                player_embed = discord.Embed()
+                player_embed.title = f'{self.bot.user.name} Music Player... loading'
+                player_embed.set_thumbnail(url=self.bot.user.avatar_url)
+                player_embed.color = 0x206694
+                player_embed.set_footer(text=f'{self.bot.user.name} is now linked to {ctx.voice_client.channel.name}')
+                player_msg = await ctx.send(embed = player_embed)
                 while queue != []:
                     async with ctx.typing():
                         playurl = queue[0]
                         queue.remove(playurl)
                         player = await YTDLSource.from_url(playurl, loop=self.bot.loop, stream=True)
                         ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-                    await ctx.send('Now playing: {}'.format(player.title))
                     while ctx.voice_client.is_playing():
+                        player_embed.title = ('Now playing: {}'.format(player.title))
+                        player_embed.description = '\n'.join(queue)
+                        await player_msg.edit(embed = player_embed)
                         await asyncio.sleep(5)
+                await ctx.send(f'{ctx.message.author.mention} | There are no more songs in the queue to play 🎵')
                 await ctx.invoke(self.bot.get_command('stop'))
-                await ctx.send('Stopped playing')
         except:
-            await ctx.send('Stopped playing')
             await ctx.invoke(self.bot.get_command('stop'))
             return
                 
