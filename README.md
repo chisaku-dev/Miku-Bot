@@ -23,7 +23,7 @@
             <br>
             <div>
                 <h2>Utility 🔨</h2>
-                <p>bugreport - sends a message to #bugreport in the support server</p>
+                <p>bugreport - sends a message to the admin</p>
                 <p>embed - embeds messsage given by user</p>
                 <p>ping - ping 🏓 me to get the latency!</p>
                 <p>help - The help 🆘 command!</p>
