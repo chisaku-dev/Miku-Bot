@@ -92,7 +92,7 @@ class Music(commands.Cog):
             await ctx.send(f"{counter} songs were added to queue")
         else:
             url = search
-            if not 'youtube' in url:
+            if not 'youtube' or 'youtu.be' in url:
                 await ctx.send('This is not a Youtube link, I cannot open this!')
             else:
                 queue.append(url)

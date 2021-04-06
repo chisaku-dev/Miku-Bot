@@ -20,9 +20,6 @@ async def cog(bot):
 async def background_activities(bot):
     #bot server count is reported in activity
     await asyncio.sleep(15)
-    await bot.change_presence(activity=discord.Activity(
-                type = discord.ActivityType.listening,
-                name=("{} servers!").format(len(bot.guilds))))
 
 #bot main
 def startup(token, prefix):
@@ -49,6 +46,9 @@ def startup(token, prefix):
         await cog(bot)
         print(f'Logged in as {bot.user.name} - {bot.user.id}')
         print(f'Invite me with https://discord.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8')
+        await bot.change_presence(activity=discord.Activity(
+                type = discord.ActivityType.listening,
+                name=(f"{prefix}help!")))
         while True:
             await background_activities(bot)
     
