@@ -6,12 +6,10 @@
             <h1>Info</h1>
             <p>A Miku bot made for fans 🎤 by a fan!</p>
             <p>Fun gimmicks, music, memes and a cross server chat for all your Miku fun.</p>
-            <p>Join our support server at <a href="https://top.gg/servers/794027141678366770">Miku's Bot Anime and Memes!</a></p>
             <p>You can invite Miku with <a href="https://top.gg/bot/617550552074551327">Miku Bot</a></p>
             <p>THIS IS NOT INTENDED FOR PERSONAL USE BUT...</p>
             <p>If you are insistent on running this bot on your own, you will need the discord bot token, reddit api id and secret</p>
             <p>This bot does NOT use the youtube api, but instead searches for music on it's own</p>
-            <p>Use this command to install the required libraries: pip install discord praw ytdl youtube_search youtube_dl pytube<p>
         </div>
         <br>
         <div style="border-radius: 8px; padding: 1cm; background-color:rgba(0, 0, 0, 0.05);">
@@ -20,15 +18,16 @@
             <div>
                 <h2>Basic:</h2>
                 <p>hello - Miku says Hello! 👋</p>
-                <p>bugreport - sends a message to #bugreport in the support server</p>
                 <p>baka - Miku calls you a baka 🧠!</p>
             </div>
             <br>
             <div>
                 <h2>Utility 🔨</h2>
+                <p>bugreport - sends a message to #bugreport in the support server</p>
                 <p>embed - embeds messsage given by user</p>
                 <p>ping - ping 🏓 me to get the latency!</p>
                 <p>help - The help 🆘 command!</p>
+                <p>translate - translates any language that google translate supports into english</p>
             </div>
             <br>
             <div>
@@ -54,12 +53,15 @@
                 <h2>Music 🎵</h2>
                 <p>play - Miku find a song on youtube with the inputted keywords 🎹</p>
                 <p>volume - Miku changes how loud she sings from a scale of 🎛 1-100%</p>
-                <p>queue -  Miku shows the list 📝 of songs that will be played after the conclusion of the currently played song</p>
                 <p>clearqueue - Miku clears the queue of any songs</p>
                 <p>remove - Miku removes 🔪 a song from the list</p>
                 <p>stop - This stops ❌ the music and Miku leaves the voicechannel</p>
             </div>
             <br>
+            <div>
+                <h2>DeviantArt</h2>
+                <p>image - Searches for an image on deviantart</p>
+            </div>
         </div>
         <br>
         <div style="border-radius: 8px; padding: 1cm; background-color:rgba(0, 0, 0, 0.05);">    
