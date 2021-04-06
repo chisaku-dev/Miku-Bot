@@ -59,7 +59,6 @@ class YTDLSource(discord.PCMVolumeTransformer):
         filename = data['url'] if stream else ytdl.prepare_filename(data)
         return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options), data=data)
 
-
 class Music(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -105,7 +104,7 @@ class Music(commands.Cog):
                 player_embed.title = f'{self.bot.user.name} Music Player... loading'
                 player_embed.set_thumbnail(url=self.bot.user.avatar_url)
                 player_embed.color = 0x206694
-                player_embed.set_footer(text=f'{self.bot.user.name} is now linked to {ctx.voice_client.channel.name}')
+                player_embed.set_footer(text=f'{self.bot.user.name} is now linked to {ctx.voice_client.channel.name} 📌')
                 player_msg = await ctx.send(embed = player_embed)
                 while queue != []:
                     async with ctx.typing():
