@@ -109,8 +109,11 @@ class Music(commands.Cog):
                     await ctx.send('Now playing: {}'.format(player.title))
                     while ctx.voice_client.is_playing():
                         await asyncio.sleep(5)
+                await ctx.invoke(self.bot.get_command('stop'))
+                await ctx.send('Stopped playing')
         except:
             await ctx.send('Stopped playing')
+            await ctx.invoke(self.bot.get_command('stop'))
             return
                 
     @commands.command(
