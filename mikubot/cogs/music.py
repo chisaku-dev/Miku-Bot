@@ -118,7 +118,7 @@ class Music(commands.Cog):
                         await player_msg.edit(embed = player_embed)
                         await asyncio.sleep(5)
                 await player_msg.delete()
-                await ctx.send(embed = discord.Embed(title = f'{self.bot.user.name} music player'), description = (f'{ctx.message.author.mention} | There are no more songs in the queue to play 🎵')))
+                await ctx.send(embed = discord.Embed(title = f'{self.bot.user.name} music player', description = (f'{ctx.message.author.mention} | There are no more songs in the queue to play 🎵')))
                 await ctx.invoke(self.bot.get_command('stop'))
         except:
             await ctx.invoke(self.bot.get_command('stop'))
