@@ -124,22 +124,6 @@ class Music(commands.Cog):
         except:
             await ctx.invoke(self.bot.get_command('stop'))
             return
-                
-    @commands.command(
-        name="queue",
-        help="View the queue"
-    )
-    async def queue(self, ctx):
-        try:
-            if queue != []:
-                separator = '\n'
-                queuelist = separator.join(queue)
-                queue_embed = discord.Embed(title='Queue', description=queuelist)
-                await ctx.send(embed=queue_embed)
-            else:
-                await ctx.send('The queue is empty')
-        except:
-            await ctx.send('I am not playing anything right now')
 
     @commands.command(
         name="remove",
