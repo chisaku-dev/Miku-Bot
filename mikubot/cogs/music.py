@@ -13,6 +13,8 @@ import re
 from pytube import Playlist
 import random
 
+#make sure to install ffmpeg
+
 # Suppress noise about console usage from errors
 youtube_dl.utils.bug_reports_message = lambda: ''
 
