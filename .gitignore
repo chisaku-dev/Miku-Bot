@@ -25,3 +25,7 @@ mikubot/cogs/__pycache__/reddit.cpython-38.pyc
 mikubot/cogs/__pycache__/translate.cpython-38.pyc
 mikubot/cogs/__pycache__/utility.cpython-38.pyc
 save_file.db
+mikubot/Pipfile
+mikubot/Pipfile.lock
+mikubot/__pycache__/ui.cpython-38.pyc
+mikubot/data/bots.easybot

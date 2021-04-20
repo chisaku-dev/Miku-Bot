@@ -419,7 +419,7 @@ async def main(self, ctx):
                 return ms.channel == ctx.message.channel and ms.author == ctx.message.author
             inputmove = await self.bot.wait_for('message', check=check)
             if inputmove.content == 'stop':
-                await ctx.send('You forfeited | Miku wins!')
+                await ctx.send(f'You forfeited | {self.bot.user.name} wins!')
                 return
             match = re.match('([a-h][1-8])'*2, inputmove.content)
             if match:
@@ -444,11 +444,11 @@ async def main(self, ctx):
                 break
 
         if score == MATE_UPPER:
-            await ctx.send("Checkmate! | Miku wins!")
+            await ctx.send(f"Checkmate! | {self.bot.user.name} wins!")
 
         # The black player moves from a rotated position, so we have to
         # 'back rotate' the move before await ctx.sending it.
-        cpumove = f"Miku's move: {render(119-move[0]) + render(119-move[1])}"
+        cpumove = f"{self.bot.user.name}'s move: {render(119-move[0]) + render(119-move[1])}"
         await ctx.send(f'{cpumove}')
         hist.append(hist[-1].move(move))
 
@@ -462,7 +462,7 @@ class Fun(commands.Cog):
         
     @commands.command(
         name='chess',
-        help='Miku plays Chess!',
+        help='I can play Chess!',
         pass_context=True
         )
     async def chess(self, ctx):
